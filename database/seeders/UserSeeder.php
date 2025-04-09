@@ -17,13 +17,13 @@ class UserSeeder extends Seeder
         User::insert(
             [
                 [
-                    'name'=> '',
-                    'midlename'=> '',
-                    'lastname'=> '',
-                    'login'=> '',
-                    'password'=> Hash::make('password'),
-                    'tel'=> '',
-                    'email'=> '',
+                    'name'=> 'AdminName',
+                    'middlename'=> 'AdminMiddlename',
+                    'lastname'=> 'AdminLastname',
+                    'school'=> '32',
+                    'class' => '9Б',
+                    'email'=> 'admin@mail.com',
+                    'password'=> Hash::make('administrator'),
                 ],
             ]
         );
