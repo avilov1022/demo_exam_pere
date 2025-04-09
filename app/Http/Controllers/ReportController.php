@@ -21,7 +21,7 @@ class ReportController extends Controller
     if (!$this->isAdminByEmail('admin@mail.com')) {
        abort(403, 'Вы не адмиииииин');
     }
-        $works = Work::paginate(10); 
+        $works = Work::all(); 
         $categories = Category::all();
 
         return view('admin', compact('works', 'categories'));
@@ -67,15 +67,17 @@ class ReportController extends Controller
     {
         $data = $request->validate([
             'title' => 'required|string|max:255',
-            'path_img' => 'required|string|max:255',
-            'score' => 'required|string|max:255',
+            'path_img' => 'mimes:jpeg,bmp,png',
             'category_id' => 'required|exists:categories,id',
         ]);
 
+        $imageName = time() . '.' . $request->path_img->extension();
+        $request->path_img->storeAs('reports', $imageName, 'public');
+        $request->path_img->move(public_path('images'), $imageName);
+
         Work::create([
             'title' => $data['title'],
-            'path_img' => $data['path_img'],
-            'score' => $data['score'],
+            'path_img' => $imageName,
             'category_id' => $data['category_id'],
             'user_id' => Auth::id(),
         ]);
