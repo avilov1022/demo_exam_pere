@@ -32,14 +32,13 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:60'],
-            'midlename' => ['required', 'string', 'max:60'],
+            'middlename' => ['required', 'string', 'max:60'],
             //'path_img' => 'image|mimes:png,jpg,jpeg,gif|max:800',
             'lastname' => ['required', 'string', 'max:60'],
-            'login' => ['required', 'string', 'max:60', 'unique:'.User::class],
+            'school' => ['required', 'string', 'max:60'],
+            'class' => ['required', 'string', 'max:60'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:60', 'unique:'.User::class],
-            'password' => ['required', Rules\Password::defaults()],
-            'tel' => ['required', 'string', 'max:20','unique:'.User::class],
-            
+            'password' => ['required', Rules\Password::defaults()]
         ]);
         //$imageName=Storage::disk('public')->put('/requets',$request->file('path_img'));
         //$imageName=time() . '.' . $request['path_img']->extension();
@@ -47,13 +46,14 @@ class RegisteredUserController extends Controller
 
         $user = User::create([
             'name' => $request->name,
-            'midlename' => $request->midlename,
-            //'path_img'=>$imageName,  
+            'middlename' => $request->middlename,
+            //'path_img'=>$imageName,
             'lastname' => $request->lastname,
-            'login' => $request->login,
+            'school' => $request->school,
+            'class' => $request->class,
+
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'tel' => $request->tel,
         ]);
 
         event(new Registered($user));

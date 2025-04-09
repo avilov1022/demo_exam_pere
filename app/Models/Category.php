@@ -15,6 +15,6 @@ class Category extends Model
 
     public function work()
     {
-        return $this->hasMany(Report::class, 'category_id'); 
+        return $this->hasMany(Work::class, 'category_id'); 
     }
 }
